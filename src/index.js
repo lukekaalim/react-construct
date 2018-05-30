@@ -1,36 +1,40 @@
 // @flow
 import type { Node } from 'react';
 
-type Definition = {
+export type Definition = {
   type: string,
-  dependencies?: Array<{name: string, definition: Array<Definition>}>,
   [string]: any,
 };
 
-type Resolver = (
+export type Resolver = (
   previous: any,
   current?: Definition,
   next: (result: any) => Node,
 ) => Node;
 
-type Props = {
+export type ConstructProps = {
   render?: (result: any) => Node,
   definition: Array<Definition>,
   resolvers: Array<{ type: string, resolverFunc: Resolver }>,
 };
 
-const identity = x => x;
-const identityResolver: Resolver = (previous, current, next) => next(previous);
+const identity = <T>(x: T): T => x;
 
-const Construct = ({ definition, resolvers, render }: Props) => {
-  const getResolver = ({ type }: Definition) => (
-    resolvers.find(resolver => resolver.type === type) || { resolverFunc: identityResolver }
-  ).resolverFunc;
-
-  const constructed = definition.reduceRight(
-      (next, current) => previous => getResolver(current)(previous, current, next),
-      render || identity,
-    )
-  return constructed(null);
+const getResolver = ({ type }: Definition, resolvers: Array<{type: string, resolverFunc: Resolver }>) => {
+  const resolver = resolvers.find(resolver => resolver.type === type);
+  if (!resolver || !resolver.resolverFunc) {
+    throw Error(`Can\'t fine resolver function for type: ${type}`);
+  }
+  return resolver.resolverFunc;
 };
+
+const reducer = resolvers =>
+  (next, current) =>
+    previous =>
+      getResolver(current, resolvers)(previous, current, next)
+
+const Construct = ({ definition, resolvers, render }: ConstructProps) => (
+  definition.reduceRight(reducer(resolvers), render || identity)(null)
+);
+
 export default Construct;

@@ -73,7 +73,7 @@ const resolvers = [
 
 const def = [
   { type: 'fetch', url: 'https://dog.ceo/api/breeds/image/random' },
-  { type: 'renderDog', title: 'That's one cool dog!', alt: 'Doggy!' }
+  { type: 'renderDog', title: 'That\'s one cool dog!', alt: 'Doggy!' }
 ];
 
 return <Construct definition={def} resolvers={resolvers}/>;

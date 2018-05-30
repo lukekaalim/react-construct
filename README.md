@@ -6,38 +6,41 @@
 Feed the component a definition
 
 ```javascript
+import React from 'react';
 import { Construct } from 'react-construct';
 import { standardResolvers } from 'react-construct/resolvers';
 
-const def = [
+const definition = [
   { type: 'fetch', url: 'https://dog.ceo/api/breeds/image/random' },
   { type: 'getProperty', propertyName: 'message' }
 ];
-
-return <Construct definition={def} resolvers={standardResolvers} />
+export const Dog = () => <Construct definition={definition} resolvers={standardResolvers} />;
 ```
 
 Unrolls to the react tree
 
 ```javascript
-<Construct definition={deps} resolvers={standardResolvers}>
-  <WithFetch url={'https://dog.ceo/api/breeds/image/random'} render={data => (
-    getProperty(data, 'message')
-  )}>
-</Construct>
-
+  export const Dog = () => (
+    <Fetch url={'https://dog.ceo/api/breeds/image/random'} render={data => (
+      getProperty(data, 'message', '')
+    )}>
+  );
 ```
 
-Which (eventually) renders to the string:
+Which when used like:
+```javsscript
+<Dog />
+```
+*eventually* renders to a string:
 ```https://images.dog.ceo/breeds/borzoi/n02090622_7489.jpg```
 
 ### Advanced Use
 
-Do something useful with the data
+Do something useful with the data like plug the string into an ```<img>``` tag
 
 ```javascript
 import { Construct } from 'react-construct';
-import { standardResolvers } from 'react-construct/resolvers';
+import standardResolvers from 'react-construct/resolvers';
 
 const def = [
   { type: 'fetch', url: 'https://dog.ceo/api/breeds/image/random' },
@@ -48,8 +51,13 @@ const renderWithDog = dogImageUrl => (
   <img src={dogImageUrl} alt="A random Dog!" />
 );
 
-return <Construct definition={def} resolvers={standardResolvers} render={renderWithDog}/>;
+export const Dog = () => (
+  <Construct definition={def} resolvers={standardResolvers} render={renderWithDog}/>;
+);
 ```
+``` <Dog /> ```
+becomes:
+![A random Dog!](https://images.dog.ceo/breeds/borzoi/n02090622_7489.jpg)
 
 Or build your own resolver for more control
 
@@ -57,6 +65,7 @@ Or build your own resolver for more control
 import { Construct } from 'react-construct';
 import { standardResolvers } from 'react-construct/resolvers';
 
+// Your own custom Dog component that takes in a src, and alt and a title
 import Dog from 'src/components/Dog';
 
 const renderDog = (previous, current, next) => {
@@ -76,7 +85,7 @@ const def = [
   { type: 'renderDog', title: 'That\'s one cool dog!', alt: 'Doggy!' }
 ];
 
-return <Construct definition={def} resolvers={resolvers}/>;
+export const RandomDog = () => <Construct definition={def} resolvers={resolvers}/>;
 ```
 ### Complex Example
 Render a whole react tree from an arbitrary payload using custom resolvers with dependencies, multiple api calls, authentication from tokens stored in the redux state, loading states, higher-order resolvers and more.
@@ -263,3 +272,10 @@ export const renderToComponentResolver = (previous, { components }, next) => (
   });
 );
 ```
+
+Most of those resolvers or something like them can be found in.
+```javascript
+import standardResolvers from 'react-construct/resolvers';
+```
+
+Docs incoming eventually...

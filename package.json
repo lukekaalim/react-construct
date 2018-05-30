@@ -7,21 +7,14 @@
     "start": "webpack --watch",
     "build": "webpack"
   },
-  "peerDependencies": {
-    "react": "^15.5.4"
-  },
-  "dependencies": {
-    "react": "^15.5.4",
-    "webpack": "^2.6.1"
-  },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.5.1",
-    "babel-preset-flow": "^6.23.0"
+    "react": "^16.4.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
+    "webpack": "^4.10.1"
   },
   "keywords": [
     "react",
@@ -33,6 +26,10 @@
   "author": {
     "name": "luke kaalim",
     "email": "luke@kaal.im"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukekaalim/react-construct"
   },
   "license": "MIT"
 }

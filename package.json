@@ -1,10 +1,11 @@
 {
-  "name": "react-construct",
-  "version": "0.1.0",
+  "name": "@lukekaalim/react-construct",
+  "version": "1.0.0",
   "description": "A react component that unfolds an asynchronous dependency structure from a static definition",
   "main": "dist/react-construct.js",
   "module": "dist/react-construct.mjs",
   "scripts": {
+    "prepublishOnly": "test",
     "test": "jest",
     "dev": "jest --watchAll",
     "build": "rollup -c"

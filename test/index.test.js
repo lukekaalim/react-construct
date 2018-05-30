@@ -1,4 +1,4 @@
-import Construct from '../dist/react-construct.es6';
+import Construct from '../src/index';
 
 describe('Construct', () => {
   test('Does not throw an error when called with empty arguments', () => {

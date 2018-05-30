@@ -1,4 +1,9 @@
 {
   "presets": [["env", { "modules": false }], "flow"],
-  "plugins": ["external-helpers"]
+  "plugins": ["external-helpers"],
+  "env": {
+    "test": {
+      "presets": [["env"], "flow"]
+    }
+  }
 }

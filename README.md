@@ -20,11 +20,11 @@ export const Dog = () => <Construct definition={definition} resolvers={standardR
 Unrolls to the react tree
 
 ```javascript
-  export const RandomDog = () => (
-    <Fetch url={'https://dog.ceo/api/breeds/image/random'} render={data => (
-      getProperty(data, 'message')
-    )}>
-  );
+export const RandomDog = () => (
+  <Fetch url={'https://dog.ceo/api/breeds/image/random'} render={data => (
+    getProperty(data, 'message')
+  )}>
+);
 ```
 
 Which when used like:
@@ -183,15 +183,15 @@ which is the identity resolver, which does nothing but continue the chain.
 
 Under the hood, Construct is actually very simple. It's implemented something like this:
 ```javascript
-  const Construct = ({ definition, resolvers }) => {
-    const getResolver = ({ type }) => resolvers.find(resolver => resolver.type === type).resolverFunc;
-    const render = definition.reduceRight(
-        (current, next) => previous => getResolver(current)(previous, current, next),
-        input => input,
-      )
-    return render(null);
-  };
-  export default Construct;
+const Construct = ({ definition, resolvers }) => {
+  const getResolver = ({ type }) => resolvers.find(resolver => resolver.type === type).resolverFunc;
+  const render = definition.reduceRight(
+      (current, next) => previous => getResolver(current)(previous, current, next),
+      input => input,
+    )
+  return render(null);
+};
+export default Construct;
 ```
 
 This will create one big nest of react components or functions. When a component inside the chain calls set-state and/or re-renders, it will re-render all of its dependant children as well.

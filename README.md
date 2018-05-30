@@ -1,5 +1,6 @@
 # React Construct
 **Unrolling React trees from serializable definitions**
+[![npm version](https://badge.fury.io/js/%40lukekaalim%2Freact-construct.svg)](https://badge.fury.io/js/%40lukekaalim%2Freact-construct)
 
 ### Basic Use
 

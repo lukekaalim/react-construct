@@ -1,6 +1,6 @@
 {
   "name": "@lukekaalim/react-construct",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A react component that unfolds an asynchronous dependency structure from a static definition",
   "main": "dist/react-construct.js",
   "module": "dist/react-construct.mjs",

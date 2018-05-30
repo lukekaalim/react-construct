@@ -5,7 +5,7 @@
   "main": "dist/react-construct.js",
   "module": "dist/react-construct.mjs",
   "scripts": {
-    "prepublishOnly": "test",
+    "prepublishOnly": "npm run test",
     "test": "jest",
     "dev": "jest --watchAll",
     "build": "rollup -c"

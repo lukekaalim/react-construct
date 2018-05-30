@@ -1,0 +1,18 @@
+{
+  "name": "react-construct",
+  "version": "0.1.0",
+  "description": "A react component that unfolds an asynchronous dependency structure from a static definition",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "9now",
+    "dependency",
+    "resolution"
+  ],
+  "author": "luke@kaal.im",
+  "license": "MIT"
+}

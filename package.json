@@ -2,9 +2,25 @@
   "name": "react-construct",
   "version": "0.1.0",
   "description": "A react component that unfolds an asynchronous dependency structure from a static definition",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "jest"
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "peerDependencies": {
+    "react": "^15.5.4"
+  },
+  "dependencies": {
+    "react": "^15.5.4",
+    "webpack": "^2.6.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.5.1"
   },
   "keywords": [
     "react",
@@ -13,6 +29,9 @@
     "dependency",
     "resolution"
   ],
-  "author": "luke@kaal.im",
+  "author": {
+    "name": "luke kaalin",
+    "email": "luke@kaal.im"
+  },
   "license": "MIT"
 }

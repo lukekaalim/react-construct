@@ -30,7 +30,7 @@ export const RandomDog = () => (
 ```
 
 Which when used like:
-```javsscript
+```javascript
 <Dog />
 ```
 *eventually* renders to a string:
@@ -75,7 +75,7 @@ const renderDog = (previous, current, next) => {
   if (previous === null) {
     return next(null); // fetch hasn't completed yet, potentially include a loading state
   }
-  return next(<Dog src={previous.message} alt={currrent.alt} title={current.title} />);
+  return next(<Dog src={previous.message} alt={current.alt} title={current.title} />);
 }
 
 const resolvers = [
@@ -165,11 +165,11 @@ export default connect()(RandomDog)
 
 You feed the Construct component a definition array, and an array of resolver functions, and then it tries to match each element in the definition array with its corresponding resolver. Each resolver has the signature `(previous, current, next) => React.Node`, and is invoked for each matching definition in order.
 
-**previous** refers to what the previous resolver put as the first argument when it invoked `next()`. The very first resolver that runs normally recieves `null` as it's previous, but this can be overriden.
+**previous** refers to what the previous resolver put as the first argument when it invoked `next()`. The very first resolver that runs normally receives `null` as it's previous, but this can be overridden.
 
 **current** is an object representing the properties attached to the current definition. Things like `type` and `url` and `title` and the like.
 
-**next** is a function that invokes the next resolver. Whatever you put in here as an argument is what pops out of the next resolver's `previous`. Typically, resolvers want to return the result of this in each step. The final resolver normally recieves an identity function (`x => x`) as it's next, but this can be overriden.
+**next** is a function that invokes the next resolver. Whatever you put in here as an argument is what pops out of the next resolvers `previous`. Typically, resolvers want to return the result of this in each step. The final resolver normally receives an identity function (`x => x`) as it's next, but this can be overridden.
 
 The most simple resolver is written as:
 ```javascript
@@ -198,7 +198,7 @@ export default Construct;
 
 This will create one big nest of react components or functions. When a component inside the chain calls set-state and/or re-renders, it will re-render all of its dependant children as well.
 
-But this pattern opens up a lot of oppurtunities when used with react. (But, as you can see above, react is not actually needed. it works with plain javascript fine).
+But this pattern opens up a lot of opportunities when used with react. (But, as you can see above, react is not actually needed. it works with plain javascript fine).
 
 As each resolver just needs to return something to render, and *eventually* call the next function, you can have resolvers that half the chain half way through and wait for something, you can have resolvers that call next synchronously and keep the chain going.
 
@@ -278,7 +278,7 @@ export class Fetch extends Component {
     if (!cachedResponse) {
       FETCH_CACHE.set(url, { status: 'pending', response: null });
       fetch(url, init)
-        .then(reponse => {
+        .then(response => {
           FETCH_CACHE.set(url, { status: 'complete', response: response.json() });
           this.forceUpdate(); // redraw component once promise is complete
         })
@@ -296,7 +296,7 @@ export class Fetch extends Component {
 }
 
 // fetchApiResolver.js
-// Staticly define all endpoints, and switch on them based on the
+// Statically define all endpoints, and switch on them based on the
 // string
 const getUrl = endpoint => {
   switch (endpoint) {
@@ -328,7 +328,7 @@ export const authenticationTokenResolver = (previous, current, next) => (
 );
 
 // sliceArrayResolver.js
-// use defaults, deconstruction (or flowtypes)
+// use defaults, deconstruction (or flow-typing)
 export const sliceArrayResolver = (previous = [], { min = 0, max = 999 }, next) => (
   next(previous ? previous.slice(min, max) : []),
 );
@@ -363,7 +363,7 @@ export const requiredArgsEnhancer = resolver => (previous, current, next) => {
 
 // dynamicDependencyEnhancer.js
 // Possibly the craziest enhancer, use with care.
-// Recursivley calls Construct, and basically allows branches
+// Recursively calls Construct, and basically allows branches
 // There is a more complex implementation of this that allows multiple dependencies
 // But that's not needed in this example presently
 import { Construct } from 'react-construct';
@@ -433,7 +433,7 @@ import { standardResolvers } from 'react-construct/resolvers';
 ```
 
 ### Best Practices for Resolvers
-While (hopefully) easy to use (but a little difficult to grok), it is important to identity some best practices so you don't get caught out by any pit traps. Ultimatley a resolver is simply a function, and it can do all the things a function can normally do.
+While (hopefully) easy to use (but a little difficult to grok), it is important to identity some best practices so you don't get caught out by any pit traps. Ultimately a resolver is simply a function, and it can do all the things a function can normally do.
 
  - **Keep your resolvers simple**
     - Ideally, a resolver is simply a wrapper around a component or some external function. Perform some simple validation, or maybe some switching, but don't try to put too much application logic in them.
@@ -444,8 +444,8 @@ While (hopefully) easy to use (but a little difficult to grok), it is important 
 - **Always return a React Element**
     - The return statement of a resolver will dump you all the way back out to the Render method that invoked Construct in the first place, so always keep that in mind. Returning `undefined` is an error.
     - The important note in this rule is that if you follow this rule, then the `next` function should also return a React Element, so you can return that instead.
-      - With the expection of the final resolver: Depending on which direction you choose (using a render function or simply using the return value of Construct)
-- **Single Responsability**
+      - With the exception of the final resolver: Depending on which direction you choose (using a render function or simply using the return value of Construct)
+- **Single Responsibility**
     - Your resolvers should be only concerned about a single goal: the transformation of the definition and previous into a new value. Constrain the problem to as small units as you can, and then build the pieces together with your definitions file.
 - **ShouldComponentUpdate**
     - The fact that this library works well will react is almost an accident, but it comes with many benefits: they key being that when a component nested inside a resolver updates and re-renders, all children will re-render as well. Don't forget to use normal react optimization techniques if this becomes and issue, so things like ShouldComponentUpdate and PureComponent should be tools in your arsenal.
